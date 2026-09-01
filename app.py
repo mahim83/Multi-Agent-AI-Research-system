@@ -270,6 +270,9 @@ with col_input:
         "Research Topic",
         placeholder="e.g. Quantum computing breakthroughs in 2026",
         key="topic_input",
+        # Without this the browser offers earlier topics as a dropdown, which
+        # covers the example chips below the field.
+        autocomplete="off",
         disabled=st.session_state.running,
     )
     run_btn = st.button(
