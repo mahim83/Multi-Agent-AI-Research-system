@@ -12,6 +12,7 @@ from agents import (
     trim,
     writer_chain,
 )
+from formatting import normalize_report
 
 # key, number, title, description
 STEPS = [
@@ -60,16 +61,19 @@ def research_steps(topic):
         f"SEARCH RESULTS:\n{trim(state['search_results'], SEARCH_CHAR_BUDGET)}\n\n"
         f"DETAILED SCRAPED CONTENT:\n{trim(state['scraped_content'], SCRAPE_CHAR_BUDGET)}"
     )
-    state["report"] = writer_chain.invoke({
+    # normalize_report strips the HTML line breaks and paragraph-wide tables the
+    # model still produces now and then, which the Streamlit renderer would show
+    # as literal `<br>` text.
+    state["report"] = normalize_report(writer_chain.invoke({
         "topic": topic,
         "research": research_combined,
         "sources": "\n".join(state["sources"]) or "(none captured)",
-    })
+    }))
     yield "writer", state["report"], state
 
-    state["feedback"] = critic_chain.invoke({
+    state["feedback"] = normalize_report(critic_chain.invoke({
         "report": trim(state["report"], SEARCH_CHAR_BUDGET + SCRAPE_CHAR_BUDGET),
-    })
+    }))
     yield "critic", state["feedback"], state
 
 

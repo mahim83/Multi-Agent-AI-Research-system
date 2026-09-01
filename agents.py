@@ -94,7 +94,19 @@ Structure the report as:
 - Introduction
 - Key Findings (minimum 3 well-explained points)
 - Conclusion
-- Sources (list the verified URLs above)
+- Sources (a "- " list of the verified URLs above, one per line)
+
+Formatting rules:
+- Plain Markdown only. Never write HTML: no <br>, <b> or <div>. The report is
+  rendered by a reader that shows those as literal text instead of formatting.
+- Give each key finding its own "### Finding N - <short title>" subsection,
+  holding a paragraph of analysis followed by "- " bullets of evidence. Do not
+  put the findings in a table.
+- Use a table only for short comparable values: at most 4 columns, one brief
+  phrase per cell, and never a line break inside a cell.
+- Start every bullet with "- ". Never use the "•" character.
+- Cite inline as (Publisher, D Mon YYYY), not with bracket markers, and list the
+  matching URL under Sources.
 
 Be detailed, factual and professional."""),
 ])
